@@ -19,11 +19,8 @@ class ObservableTodoStore {
         ).length;
     }
 
-    @computed get report() {
-        if (this.todos.length === 0)
-            return "<none>";
-        return `Next todo: "${this.todos[0].task}". ` +
-            `Progress: ${this.completedTodosCount}/${this.todos.length}`;
+    @computed get totalListItems() {
+        return this.todos.length;
     }
 
     @action

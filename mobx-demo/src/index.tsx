@@ -9,12 +9,12 @@ import {GlobalStyle} from './indexStyles';
 ReactDOM.render(
     <Provider toDoStore={observableTodoStore}>
     
-        <div className="todo">
+        <>
             <GlobalStyle />
             <TodoList />
             <EditListView />
-        </div>
+        </>
         
     </Provider>,
-    document.getElementById('root') as HTMLElement
+    document.getElementById('todo') as HTMLElement
 );

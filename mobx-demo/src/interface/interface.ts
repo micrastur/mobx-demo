@@ -23,7 +23,8 @@ export interface ToDoStore {
         todos: ToDoItem[],        
         isEditMode: boolean,
         pendingRequests: number,
-        report(): string,
+        completedTodosCount: number,
+        totalListItems: number,
         setToDoEditableProp(index: number): void,
         setToDoOptions(options: ToDoItem, index: number): void
     }

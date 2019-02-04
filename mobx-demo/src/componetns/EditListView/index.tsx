@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { ToDoItem, ToDoStore } from "../interface/interface";
+import { ToDoItem, ToDoStore } from "../../interface/interface";
 import { inject, observer } from 'mobx-react';
+import { EditList } from './indexStyle';
 interface SetStateTask {
     task: string,
     completed: boolean,
@@ -52,17 +53,23 @@ export default class  EditListView extends React.Component<{toDoId?: number} & T
         return (
             <>
                 {/* {(task || !this.props.todo) && */}
-                    <div>
-                        <input
-                            type='checkbox'
-                            checked={completed}
-                            onChange={() => {this.onFieldChange('completed', !completed)}}
-                        />
-                        <input type="text"
-                            value={task}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {this.onFieldChange('task', e.currentTarget.value)}}/>
+                    <EditList>
+                        <div>
+                            Completing task status: 
+                            <input
+                                type='checkbox'
+                                checked={completed}
+                                onChange={() => {this.onFieldChange('completed', !completed)}}
+                            />
+                        </div>
+                        <div>
+                            Task name: 
+                            <input type="text"
+                                value={task}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {this.onFieldChange('task', e.currentTarget.value)}}/>
+                        </div>
                         <button onClick={() => {this.handleItemChange()}}></button>
-                    </div>
+                    </EditList>
                 {/* } */}
             </>
         )    
