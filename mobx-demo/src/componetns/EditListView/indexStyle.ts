@@ -22,9 +22,10 @@ const EditList = styled.div`
     ${({isNewMode}: NewMode) => isNewMode && `
         position: absolute;
         left: 50%;
-        bottom: 100%;
+        bottom: 0;
         width: 380px;
         margin-left: -190px;
+        background-color: #fcfcfc;
         box-shadow: 0 0 13px #e2e2e2;
         padding: 20px;
     `}

@@ -1,33 +1,21 @@
 import * as React from 'react';
-import { CreateBtn, CreateBtnWrap } from './indexStyle';
-export interface Props {
-    children: React.ReactNode
-}
+import { CreateBtn } from './indexStyle';
+import { inject, observer } from 'mobx-react';
+import { ToDoStore } from '../../interface/interface';
  
-export interface State {
-    isBtnClicked: boolean
-}
- 
-class NewTaskBtn extends React.Component<Props, State> {
-    state = {
-        isBtnClicked: false
-    }
 
-    setCkickedProp() {
-        const { isBtnClicked } = this.state;
-        this.setState({
-            isBtnClicked: !isBtnClicked
-        });
+@inject("toDoStore")
+@observer
+class NewTaskBtn extends React.Component<ToDoStore> {
+
+    setEditMode() {
+        this.props.toDoStore!.setEditMode();
     }
 
     render() {
-        const createTaskView = this.state.isBtnClicked
-            ? this.props.children
-            : <CreateBtn onClick={() => this.setCkickedProp()}/>
+        
         return (
-            <CreateBtnWrap>
-                {createTaskView}
-            </CreateBtnWrap>
+            <CreateBtn onClick={() => this.setEditMode()}/>
         );
     }
 }

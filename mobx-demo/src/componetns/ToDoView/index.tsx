@@ -14,8 +14,8 @@ import {
 @observer
 class TodoView extends React.Component<ToDoStore> {
     handleEditView(index: number) {
-        let c = this.props.toDoStore!.setEditedToDo(index);
-        console.log('setEditedToDo', this.props.toDoStore!.getEditedTodo())
+        this.props.toDoStore!.setEditedToDo(index);
+        this.props.toDoStore!.setEditMode();
     }
     render() {
         const toDoList = this.props.toDoStore!.getToDoList();

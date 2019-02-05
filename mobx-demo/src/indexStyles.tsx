@@ -1,4 +1,4 @@
-import {createGlobalStyle} from "styled-components";
+import styled, {createGlobalStyle} from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -22,4 +22,10 @@ export const GlobalStyle = createGlobalStyle`
         justify-content: center;
         height: inherit;
     }
+`
+export const ToDoListWrapper = styled.div`
+    position: relative;
+    background-color: #fbfbfb;
+    width: 400px;
+    height: 600px;
 `

@@ -24,7 +24,7 @@ export default class  EditListView extends React.Component<ToDoStore, EditState>
         const editedTodo = this.props.toDoStore!.getEditedTodo(),
             isEditedTodo = editedTodo.id;
 
-        console.log(editedTodo);
+        console.log(isEditedTodo);
         let initialState = {
             id: this.props.toDoStore!.getToDoList().length - 1,
             task: '',
@@ -44,46 +44,49 @@ export default class  EditListView extends React.Component<ToDoStore, EditState>
 
     onFieldChange(key: StateKeys, value: string|boolean) {
         console.log(value);
+        const changedData = {[key]: value}  as Pick<ToDoItem, keyof SetStateTask>;
         this.setState({
-            options: {
-                [key]: value
-            } as Pick<ToDoItem, keyof SetStateTask>
+            options: Object.assign({}, this.state.options, changedData)
        } as EditState);
     }
 
     handleItemChange() {
         const { options, isNewMode } = this.state;
+        console.log(options);
         this.props.toDoStore!.setToDoOptions(options, this.state.options.id)
     }
 
     render() {
-        let {options: {task, completed}, isNewMode} = this.state;
-        console.log('isNewEditMode', isNewMode);
+        const isEditMode = this.props.toDoStore!.getEditMode;
+        let {options: {task, completed}} = this.state;
+        console.log('isNewEditMode', isEditMode);
         return (
             <>
-                <EditList isNewMode={isNewMode}>
-                    <div>
-                        Task name: 
-                        <EditListTaskName type="text"
-                            value={task}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {this.onFieldChange('task', e.currentTarget.value)}}/>
-                    </div>
-                    <EditListSection>
-                        Completing task status: 
-                            <EditListLabel>
-                                <EditListCheckbox
-                                    type='checkbox'
-                                    checked={completed}
-                                    onChange={() => {this.onFieldChange('completed', !completed)}}
-                                />
-                                <EditListАictiveCheckbox></EditListАictiveCheckbox>
-                            </EditListLabel>
-                    </EditListSection>
-                    <EditListChangeBtn onClick={() => {this.handleItemChange()}}>
-                        Apply changes
-                    </EditListChangeBtn>
-                    {isNewMode && <EditListClose/>}
-                </EditList>
+                {this.props.toDoStore!.getEditMode && 
+                    <EditList isNewMode={isEditMode}>
+                        <div>
+                            Task name: 
+                            <EditListTaskName type="text"
+                                value={task}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {this.onFieldChange('task', e.currentTarget.value)}}/>
+                        </div>
+                        <EditListSection>
+                            Completing task status: 
+                                <EditListLabel>
+                                    <EditListCheckbox
+                                        type='checkbox'
+                                        checked={completed}
+                                        onChange={() => {this.onFieldChange('completed', !completed)}}
+                                    />
+                                    <EditListАictiveCheckbox></EditListАictiveCheckbox>
+                                </EditListLabel>
+                        </EditListSection>
+                        <EditListChangeBtn onClick={() => {this.handleItemChange()}}>
+                            Apply changes
+                        </EditListChangeBtn>
+                        {isEditMode && <EditListClose onClick={() => this.props.toDoStore!.setEditMode()}/>}
+                    </EditList>
+                }
             </>
         )    
     }

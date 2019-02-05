@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom";
 import { observableTodoStore } from './store/toDoList.store';
 import TodoList from './componetns/ToDoList';
 import EditListView from './componetns/EditListView';
-import {GlobalStyle} from './indexStyles';
+import {GlobalStyle, ToDoListWrapper} from './indexStyles';
 import NewTaskBtn from './componetns/NewTaskBtn';
 
 ReactDOM.render(
@@ -12,10 +12,12 @@ ReactDOM.render(
     
         <>
             <GlobalStyle />
-            <TodoList />
-            <NewTaskBtn>
+            <ToDoListWrapper>
+                <TodoList />
+                <NewTaskBtn />
                 <EditListView />
-            </NewTaskBtn>
+            </ToDoListWrapper>
+            
         </>
         
     </Provider>,

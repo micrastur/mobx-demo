@@ -3,11 +3,11 @@ import { ToDoItem } from "../interface/interface";
 // import * as mobx from 'mobx';
 
 class ObservableTodoStore {
-    @observable private todos = [
+    @observable todos = [
         {id: 0, task: 'test', completed: false}
     ];
-    @observable private isEditMode = false;
-    @observable private editedToDo = {};
+    @observable isEditMode = false;
+    @observable editedToDo = {};
 
     @computed get completedTodosCount() {
         return this.todos.filter(
@@ -34,13 +34,23 @@ class ObservableTodoStore {
     setEditedToDo(id: number) {
         let k = this.todos.filter(todo => todo.id === id);
         this.editedToDo = k;
-        console.log('get', k);
     }
 
     @action
     getEditedTodo() {
         return this.editedToDo;
     }
+
+    @action
+    setEditMode() {
+        this.isEditMode = !this.isEditMode;
+    }
+
+    @computed get getEditMode() {
+        return this.isEditMode;
+    }
+
 }
 
-export const observableTodoStore = new ObservableTodoStore();
+export const 
+observableTodoStore = new ObservableTodoStore();

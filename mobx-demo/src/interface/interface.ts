@@ -33,6 +33,8 @@ export interface ToDoStore {
         setToDoOptions(options: ToDoItem, index: number): void,
         getToDoList(): ToDoItem[]
         setEditedToDo(id: number): void,
-        getEditedTodo(): ToDoItem
+        getEditedTodo(): ToDoItem,
+        setEditMode(): void,
+        getEditMode: boolean
     }
 }

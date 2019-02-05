@@ -1,7 +1,6 @@
 import styled from "styled-components";
 export {
-    CreateBtn,
-    CreateBtnWrap
+    CreateBtn
 }
 
 const CreateBtn = styled.div`
@@ -9,14 +8,15 @@ const CreateBtn = styled.div`
     height: 90px;
     border-radius: 100%;
     background-color: #539e64;
-    position: relative;
-    margin-top: -45px;
+    position: absolute;
+    bottom: -45px;
+    left: 50%;
+    margin-left: -45px;
 
     ::before {
         content: '+';
         height: 70px;
         font-size: 60px;
-        line-height: 1em;
         font-weight: 100;
         color: #ffffff;
         margin: auto;
@@ -27,8 +27,4 @@ const CreateBtn = styled.div`
         right: 0;
         text-align: center;
     }
-`
-
-const CreateBtnWrap = styled.div`
-    position: relative;
 `
