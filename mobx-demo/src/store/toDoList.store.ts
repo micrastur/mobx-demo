@@ -3,15 +3,11 @@ import { ToDoItem } from "../interface/interface";
 // import * as mobx from 'mobx';
 
 class ObservableTodoStore {
-    @observable todos = [
-        {id: 0, task: 'test', completed: false, editable: false}
+    @observable private todos = [
+        {id: 0, task: 'test', completed: false}
     ];
-    @observable isEditMode = false;
-    //@observable pendingRequests = 0;
-
-    // constructor() {
-    //     mobx.autorun(() => console.log(this.report));
-    // }
+    @observable private isEditMode = false;
+    @observable private editedToDo = {};
 
     @computed get completedTodosCount() {
         return this.todos.filter(
@@ -20,19 +16,30 @@ class ObservableTodoStore {
     }
 
     @computed get totalListItems() {
-        return this.todos.length;
-    }
-
-    @action
-    setToDoEditableProp(index: number) {
-        this.todos[index].editable = !this.todos[index].editable;
-        console.log(this.todos[index].editable);
+        return this.todos.length; 
     }
 
     @action
     setToDoOptions(options: ToDoItem, index: number){
         const toDoIndex = index || this.todos.length - 1;
-        this.todos.splice(toDoIndex, index ? 1 : 0, options);
+        this.todos.splice(toDoIndex, index, options);
+    }
+
+    @action
+    getToDoList() {
+        return this.todos;
+    }
+
+    @action
+    setEditedToDo(id: number) {
+        let k = this.todos.filter(todo => todo.id === id);
+        this.editedToDo = k;
+        console.log('get', k);
+    }
+
+    @action
+    getEditedTodo() {
+        return this.editedToDo;
     }
 }
 

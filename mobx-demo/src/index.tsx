@@ -5,6 +5,7 @@ import { observableTodoStore } from './store/toDoList.store';
 import TodoList from './componetns/ToDoList';
 import EditListView from './componetns/EditListView';
 import {GlobalStyle} from './indexStyles';
+import NewTaskBtn from './componetns/NewTaskBtn';
 
 ReactDOM.render(
     <Provider toDoStore={observableTodoStore}>
@@ -12,8 +13,9 @@ ReactDOM.render(
         <>
             <GlobalStyle />
             <TodoList />
-            
-            <EditListView />
+            <NewTaskBtn>
+                <EditListView />
+            </NewTaskBtn>
         </>
         
     </Provider>,

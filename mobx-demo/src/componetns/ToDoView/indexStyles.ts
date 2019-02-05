@@ -26,6 +26,7 @@ const TodoViewItem = styled.li`
 `
 
 const TodoViewItemName = styled.span`
+    width: 100%;
     ${({ isCompleted}: CompleteInterface) => isCompleted && `
         text-decoration: line-through;
     `}

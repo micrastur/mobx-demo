@@ -6,20 +6,34 @@ export {
     EditListCheckbox,
     EditListАictiveCheckbox,
     EditListTaskName,
-    EditListChangeBtn
+    EditListChangeBtn,
+    EditListClose
 };
+
+interface NewMode {
+    isNewMode: boolean
+}
 
 const EditList = styled.div`
     margin: 10px 0;
     font-size: 14px;
     font-weight: 600;
     color: #539e64;
+    ${({isNewMode}: NewMode) => isNewMode && `
+        position: absolute;
+        left: 50%;
+        bottom: 100%;
+        width: 380px;
+        margin-left: -190px;
+        box-shadow: 0 0 13px #e2e2e2;
+        padding: 20px;
+    `}
 `
 
 const EditListSection = styled.div`
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 `
 
 const EditListLabel = styled.label`
@@ -86,4 +100,25 @@ const EditListChangeBtn = styled.button`
     border: none;
     color: #fbfbfb;
     background-color: #509f61;
+`
+
+const EditListClose = styled.span`
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+    border: 1px solid #a0a0a0;
+    border-radius: 50px;
+    cursor: pointer;
+
+    ::before {
+        content: 'x';
+        position: absolute;
+        left: 5px;
+        font-weight: 100;
+        color: #a0a0a0;
+        text-align: center;
+    }
 `

@@ -17,6 +17,7 @@ export const GlobalStyle = createGlobalStyle`
 
     #todo {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         height: inherit;

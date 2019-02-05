@@ -3,10 +3,6 @@ export interface ToDoListView {
     todos: ToDoItem[]
 }
 
-export interface ToDoId {
-    id: number
-}
-
 export interface CompleteInterface {
     isCompleted: boolean
 }
@@ -14,8 +10,12 @@ export interface CompleteInterface {
 export interface ToDoItem {
     id: number,
     task: string,
-    completed: boolean,
-    editable: boolean
+    completed: boolean
+}
+
+export interface EditState {
+    options: ToDoItem,
+    isNewMode: boolean
 }
 
 export interface ToDoItemProps {
@@ -24,19 +24,15 @@ export interface ToDoItemProps {
 
 export interface ToDoStore {
     toDoStore?: {
-        todos: ToDoItem[],        
+        todos: ToDoItem[],
+        editedToDo: ToDoItem,
         isEditMode: boolean,
         pendingRequests: number,
         completedTodosCount: number,
         totalListItems: number,
-        setToDoEditableProp(index: number): void,
-        setToDoOptions(options: ToDoItem, index: number): void
+        setToDoOptions(options: ToDoItem, index: number): void,
+        getToDoList(): ToDoItem[]
+        setEditedToDo(id: number): void,
+        getEditedTodo(): ToDoItem
     }
-}
-
-export interface ToDoTask {
-    id: number,
-    task: string,
-    completed: boolean,
-    editable: boolean
 }
