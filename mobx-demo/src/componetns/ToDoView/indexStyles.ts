@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { CompleteInterface } from "../../interface/interface";
 export {
     TodoViewWrapper,
     TodoViewItemWrap,
     TodoViewItem,
-    TodoViewItemCheckbox,
+    TodoViewItemName,
     TodoViewItemButton
 };
 
@@ -24,31 +25,9 @@ const TodoViewItem = styled.li`
     width: 100%;
 `
 
-interface CompleteInterface {
-    isCompleted: boolean
-}
-
-const TodoViewItemCheckbox = styled.span`
-    display: block;
-    width: 18px;
-    height: 18px;
-    border: 1px solid #e2e2e2;
-    margin-right: 15px;
-
-        ::before {
-            content: '';
-            display: none;
-            width: 8px;
-            height: 15px;
-            border: 1px solid #539e64;
-            border-width: 0 1px 1px 0;
-            transform: rotate(45deg);
-        }
+const TodoViewItemName = styled.span`
     ${({ isCompleted}: CompleteInterface) => isCompleted && `
-        border: none;
-            ::before {
-                display: inline-block;
-            }
+        text-decoration: line-through;
     `}
 `
 
@@ -63,5 +42,4 @@ const TodoViewItemButton = styled.button`
     padding: 0;
     justify-content: right;
     margin-left: auto;
-
 `

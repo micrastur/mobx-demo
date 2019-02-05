@@ -12,6 +12,7 @@ ReactDOM.render(
         <>
             <GlobalStyle />
             <TodoList />
+            
             <EditListView />
         </>
         

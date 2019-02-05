@@ -2,7 +2,13 @@ import * as React from "react";
 import { observer, inject } from "mobx-react";
 import EditListView from "../EditListView";
 import { ToDoStore, ToDoItem } from "../../interface/interface";
-import { TodoViewWrapper, TodoViewItem, TodoViewItemCheckbox, TodoViewItemButton, TodoViewItemWrap } from "./indexStyles";
+import {
+    TodoViewWrapper,
+    TodoViewItem,
+    TodoViewItemButton,
+    TodoViewItemWrap,
+    TodoViewItemName
+} from "./indexStyles";
 
 @inject("toDoStore")
 @observer
@@ -23,8 +29,9 @@ class TodoView extends React.Component<ToDoStore> {
                         return (
                             <TodoViewItemWrap key={index}>
                                 <TodoViewItem>
-                                    <TodoViewItemCheckbox isCompleted={completed}/>
-                                    {task}
+                                    <TodoViewItemName isCompleted={completed}>
+                                        {task}
+                                    </TodoViewItemName>
                                     <TodoViewItemButton
                                         onClick={() => this.handleEditView(index)}
                                     >

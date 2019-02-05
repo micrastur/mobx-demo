@@ -7,6 +7,10 @@ export interface ToDoId {
     id: number
 }
 
+export interface CompleteInterface {
+    isCompleted: boolean
+}
+
 export interface ToDoItem {
     id: number,
     task: string,

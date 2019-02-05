@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ToDoItem, ToDoStore } from "../../interface/interface";
 import { inject, observer } from 'mobx-react';
-import { EditList } from './indexStyle';
+import { EditList, EditListCheckbox, EditListАictiveCheckbox, EditListLabel, EditListSection, EditListTaskName, EditListChangeBtn } from './indexStyle';
 interface SetStateTask {
     task: string,
     completed: boolean,
@@ -54,21 +54,26 @@ export default class  EditListView extends React.Component<{toDoId?: number} & T
             <>
                 {/* {(task || !this.props.todo) && */}
                     <EditList>
-                        <div>
+                        <EditListSection>
                             Completing task status: 
-                            <input
-                                type='checkbox'
-                                checked={completed}
-                                onChange={() => {this.onFieldChange('completed', !completed)}}
-                            />
-                        </div>
+                                <EditListLabel>
+                                    <EditListCheckbox
+                                        type='checkbox'
+                                        checked={completed}
+                                        onChange={() => {this.onFieldChange('completed', !completed)}}
+                                    />
+                                    <EditListАictiveCheckbox></EditListАictiveCheckbox>
+                                </EditListLabel>
+                        </EditListSection>
                         <div>
                             Task name: 
-                            <input type="text"
+                            <EditListTaskName type="text"
                                 value={task}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {this.onFieldChange('task', e.currentTarget.value)}}/>
                         </div>
-                        <button onClick={() => {this.handleItemChange()}}></button>
+                        <EditListChangeBtn onClick={() => {this.handleItemChange()}}>
+                            Apply changes
+                        </EditListChangeBtn>
                     </EditList>
                 {/* } */}
             </>
