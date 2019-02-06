@@ -1,13 +1,17 @@
 import { observable, computed, action } from "mobx";
 import { ToDoItem } from "../interface/interface";
-// import * as mobx from 'mobx';
+import * as mobx from 'mobx';
+
 
 class ObservableTodoStore {
-    @observable todos = [
-        {id: 0, task: 'test', completed: false}
+    @observable private todos = [
+        {id: 0, task: 'Create MobX demo', completed: false}
     ];
-    @observable isEditMode = false;
-    @observable editedToDo = {};
+    @observable private editorState = {
+        isEditorOpened: false,
+        isUpdatedMode: false
+    };
+    @observable private editedToDo = {};
 
     @computed get completedTodosCount() {
         return this.todos.filter(
@@ -21,34 +25,41 @@ class ObservableTodoStore {
 
     @action
     setToDoOptions(options: ToDoItem, index: number){
-        const toDoIndex = index || this.todos.length - 1;
-        this.todos.splice(toDoIndex, index, options);
+        const isIndex = !isNaN(index),
+            toDoIndex = isIndex ? index : this.todos.length;
+        this.todos.splice(toDoIndex, isIndex ? 1 : 0, options);
     }
 
-    @action
-    getToDoList() {
+    @computed get toDoList() {
         return this.todos;
     }
 
     @action
     setEditedToDo(id: number) {
-        let k = this.todos.filter(todo => todo.id === id);
-        this.editedToDo = k;
+        let editedItem = {};
+        const {todos} = this;
+        for(let i = 0; i < todos.length; i++) {
+            const item = todos[i];
+            editedItem = item.id === id && item;
+        }
+        this.editedToDo = editedItem;
+    }
+
+    @computed get editedTodoItem() {
+        return mobx.toJS(this.editedToDo);
     }
 
     @action
-    getEditedTodo() {
-        return this.editedToDo;
+    setEditorState(opened: boolean, updated: boolean) {
+        this.editorState.isEditorOpened = opened;
+        this.editorState.isUpdatedMode = updated;
     }
 
-    @action
-    setEditMode() {
-        this.isEditMode = !this.isEditMode;
+    @computed get editorStateOption() {
+        return this.editorState;
     }
 
-    @computed get getEditMode() {
-        return this.isEditMode;
-    }
+
 
 }
 

@@ -9,12 +9,10 @@ import TodoView from "../ToDoView";
 class TodoList extends React.Component<ToDoStore> {
   render() {
     const store = this.props.toDoStore!;
-    console.log(store);
     return (
         <>
             <Header />
             <TodoView />
-            { store.pendingRequests > 0 ? 'Loading...' : null }
         </>
     );
   }

@@ -13,28 +13,28 @@ export interface ToDoItem {
     completed: boolean
 }
 
-export interface EditState {
-    options: ToDoItem,
-    isNewMode: boolean
-}
-
 export interface ToDoItemProps {
     todos: ToDoItem[]
+}
+
+interface EditorState {
+    isEditorOpened: boolean,
+    isUpdatedMode: boolean
 }
 
 export interface ToDoStore {
     toDoStore?: {
         todos: ToDoItem[],
         editedToDo: ToDoItem,
-        isEditMode: boolean,
+        editorState: EditorState,
         pendingRequests: number,
         completedTodosCount: number,
         totalListItems: number,
         setToDoOptions(options: ToDoItem, index: number): void,
-        getToDoList(): ToDoItem[]
+        toDoList: ToDoItem[]
         setEditedToDo(id: number): void,
-        getEditedTodo(): ToDoItem,
-        setEditMode(): void,
-        getEditMode: boolean
+        editedTodoItem: ToDoItem,
+        setEditorState(opened: boolean, updated: boolean): void,
+        editorStateOption: EditorState
     }
 }

@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { ToDoItem, ToDoStore, EditState } from "../../interface/interface";
+import { ToDoItem, ToDoStore } from "../../interface/interface";
 import { inject, observer } from 'mobx-react';
 import { EditList, EditListCheckbox, EditListАictiveCheckbox, EditListLabel, EditListSection, EditListTaskName, EditListChangeBtn, EditListClose } from './indexStyle';
+import { when } from 'q';
 interface SetStateTask {
     task: string,
     completed: boolean,
@@ -10,65 +11,69 @@ type StateKeys = keyof SetStateTask;
 
 @inject("toDoStore")
 @observer
-export default class  EditListView extends React.Component<ToDoStore, EditState> {
-    state = {
-        options: {
-            id: 0,
+export default class  EditListView extends React.Component<ToDoStore, ToDoItem> {
+    constructor(props: ToDoStore) {
+        super(props);
+        this.state = {
+            id: this.props.toDoStore!.toDoList.length,
             task: '',
             completed: false
-        },
-        isNewMode: false
+        }
     }
 
-    componentDidMount(){
-        const editedTodo = this.props.toDoStore!.getEditedTodo(),
-            isEditedTodo = editedTodo.id;
-
-        console.log(isEditedTodo);
-        let initialState = {
-            id: this.props.toDoStore!.getToDoList().length - 1,
-            task: '',
-            completed: false
-        };
-
-        if(isEditedTodo) {
-            const {task, completed} = editedTodo;
-            initialState.task = task;
-            initialState.completed = completed;
+    componentDidUpdate(previousProps: ToDoStore, previousState: ToDoItem){
+        const { editedTodoItem, editorStateOption: { isUpdatedMode }} = previousProps.toDoStore!,
+            { id } = this.state;
+        if (isUpdatedMode && editedTodoItem.id !== id) {
+            this.setState({
+                id: editedTodoItem.id,
+                task: editedTodoItem.task,
+                completed: editedTodoItem.completed
+            })
         }
-        this.setState({
-            options: initialState,
-            isNewMode: !isEditedTodo
-        } as EditState);
     }
 
     onFieldChange(key: StateKeys, value: string|boolean) {
-        console.log(value);
-        const changedData = {[key]: value}  as Pick<ToDoItem, keyof SetStateTask>;
         this.setState({
-            options: Object.assign({}, this.state.options, changedData)
-       } as EditState);
+            [key]: value
+       } as Pick<ToDoItem, keyof SetStateTask>)
     }
 
     handleItemChange() {
-        const { options, isNewMode } = this.state;
-        console.log(options);
-        this.props.toDoStore!.setToDoOptions(options, this.state.options.id)
+        const { id } = this.state;
+        this.props.toDoStore!.setToDoOptions(this.state, id);
+        this.resetOptions();
+    }
+
+    resetOptions() {
+        this.props.toDoStore!.setEditorState(false, false);
+        this.setState({
+            id: this.props.toDoStore!.toDoList.length,
+            task: '',
+            completed: false
+        });
     }
 
     render() {
-        const isEditMode = this.props.toDoStore!.getEditMode;
-        let {options: {task, completed}} = this.state;
-        console.log('isNewEditMode', isEditMode);
+        const {
+            isEditorOpened,
+            isUpdatedMode
+        } = this.props.toDoStore!.editorStateOption;
+        let {task, completed} = this.state;
         return (
             <>
-                {this.props.toDoStore!.getEditMode && 
-                    <EditList isNewMode={isEditMode}>
+                {isEditorOpened && 
+                    <EditList>
                         <div>
                             Task name: 
                             <EditListTaskName type="text"
                                 value={task}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {this.onFieldChange('task', e.currentTarget.value)}}/>
+                                onChange={
+                                    (e: React.ChangeEvent<HTMLInputElement>) => {
+                                        this.onFieldChange('task', e.currentTarget.value)
+                                    }
+                                }
+                            />
                         </div>
                         <EditListSection>
                             Completing task status: 
@@ -76,15 +81,17 @@ export default class  EditListView extends React.Component<ToDoStore, EditState>
                                     <EditListCheckbox
                                         type='checkbox'
                                         checked={completed}
-                                        onChange={() => {this.onFieldChange('completed', !completed)}}
+                                        onChange={
+                                            () => this.onFieldChange('completed', !completed)
+                                        }
                                     />
-                                    <EditListАictiveCheckbox></EditListАictiveCheckbox>
+                                    <EditListАictiveCheckbox/>
                                 </EditListLabel>
                         </EditListSection>
                         <EditListChangeBtn onClick={() => {this.handleItemChange()}}>
                             Apply changes
                         </EditListChangeBtn>
-                        {isEditMode && <EditListClose onClick={() => this.props.toDoStore!.setEditMode()}/>}
+                        <EditListClose onClick={() => this.resetOptions()}/>
                     </EditList>
                 }
             </>

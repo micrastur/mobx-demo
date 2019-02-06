@@ -5,7 +5,8 @@ import {
     HeaderWrapper,
     HeaderTitle,
     HeaderStatus,
-    ProgressBar
+    ProgressBar,
+    HeaderStatusTitle
 } from './indexStyles';
 
 @inject("toDoStore")
@@ -17,13 +18,17 @@ export default class Header extends Component<ToDoStore> {
     const progress = completedTodosCount
         ?  completedTodosCount / totalListItems * 100
         : 0;
-    console.log(completedTodosCount, totalListItems);
     return (
         <HeaderWrapper>
             <HeaderTitle>
                 To do list
             </HeaderTitle>
             <HeaderStatus>
+                { !progress &&
+                    <HeaderStatusTitle>
+                        Progress
+                    </HeaderStatusTitle>
+                }
                 <ProgressBar
                     progress={progress}
                 >

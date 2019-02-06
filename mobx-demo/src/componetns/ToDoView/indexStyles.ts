@@ -27,8 +27,17 @@ const TodoViewItem = styled.li`
 
 const TodoViewItemName = styled.span`
     width: 100%;
+    position: relative;
+    margin-right: 5px;
     ${({ isCompleted}: CompleteInterface) => isCompleted && `
-        text-decoration: line-through;
+        ::before {
+            content: '';
+            position: absolute;
+            top: 9px;
+            width: 100%;
+            display: block;
+            border-top: 1px solid #424242;
+        }
     `}
 `
 

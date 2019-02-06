@@ -15,10 +15,10 @@ import {
 class TodoView extends React.Component<ToDoStore> {
     handleEditView(index: number) {
         this.props.toDoStore!.setEditedToDo(index);
-        this.props.toDoStore!.setEditMode();
+        this.props.toDoStore!.setEditorState(true, true);
     }
     render() {
-        const toDoList = this.props.toDoStore!.getToDoList();
+        const toDoList = this.props.toDoStore!.toDoList;
         return (
             <TodoViewWrapper>
                 {

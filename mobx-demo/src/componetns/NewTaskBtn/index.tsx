@@ -8,14 +8,14 @@ import { ToDoStore } from '../../interface/interface';
 @observer
 class NewTaskBtn extends React.Component<ToDoStore> {
 
-    setEditMode() {
-        this.props.toDoStore!.setEditMode();
+    handleEditView() {
+        this.props.toDoStore!.setEditorState(true, false);
     }
 
     render() {
-        
+        const {isEditorOpened} = this.props.toDoStore!.editorStateOption;
         return (
-            <CreateBtn onClick={() => this.setEditMode()}/>
+            !isEditorOpened && <CreateBtn onClick={() => this.handleEditView()}/>
         );
     }
 }

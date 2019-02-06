@@ -15,7 +15,8 @@ const CreateBtn = styled.div`
 
     ::before {
         content: '+';
-        height: 70px;
+        height: 56px;
+        line-height: 46px;
         font-size: 60px;
         font-weight: 100;
         color: #ffffff;

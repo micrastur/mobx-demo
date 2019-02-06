@@ -19,16 +19,14 @@ const EditList = styled.div`
     font-size: 14px;
     font-weight: 600;
     color: #539e64;
-    ${({isNewMode}: NewMode) => isNewMode && `
-        position: absolute;
-        left: 50%;
-        bottom: 0;
-        width: 380px;
-        margin-left: -190px;
-        background-color: #fcfcfc;
-        box-shadow: 0 0 13px #e2e2e2;
-        padding: 20px;
-    `}
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 380px;
+    margin-left: -190px;
+    background-color: #fcfcfc;
+    box-shadow: 0 0 13px #e2e2e2;
+    padding: 20px;
 `
 
 const EditListSection = styled.div`
