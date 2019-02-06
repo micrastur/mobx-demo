@@ -40,7 +40,9 @@ class ObservableTodoStore {
         const {todos} = this;
         for(let i = 0; i < todos.length; i++) {
             const item = todos[i];
-            editedItem = item.id === id && item;
+            if(item.id === id) {
+                editedItem = item;
+            }
         }
         this.editedToDo = editedItem;
     }
